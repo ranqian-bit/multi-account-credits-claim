@@ -1,0 +1,21 @@
+# 本地真实信息（切勿提交）
+请勿上传-真实信息备查.md
+
+# 运行时产物
+__pycache__/
+*.pyc
+*.pyo
+*.log
+.dt-token
+token-capture
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# 打包产物
+*.zip
+*.tar.gz

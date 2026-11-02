@@ -1,0 +1,17 @@
+[Unit]
+Description=Qoder 每日领取定时器 (%i)
+
+[Timer]
+# 活动每日 10:00（UTC+8）开启新一轮，至次日 09:59 截止 —— 窗口必须落在 10:00 之后。
+# 这里给一个兜底默认值；每个账号真正的窗口由 drop-in 覆盖，
+# 保证多账号窗口互不重叠（避免同一时刻集中请求）。
+OnCalendar=*-*-* 10:20:00
+RandomizedDelaySec=14400
+# 抖动精度到秒，避免所有机器在同一秒惊醒
+AccuracySec=1s
+# 错过（关机/宕机）后开机补跑
+Persistent=true
+Unit=qoder-claim@%i.service
+
+[Install]
+WantedBy=timers.target

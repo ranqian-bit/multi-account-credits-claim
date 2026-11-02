@@ -1,0 +1,21 @@
+[Unit]
+Description=Qoder 每日 100 Credits 自动领取 (%i)
+Documentation=file:/opt/qoder-signin/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# 随机性由 timer 的 RandomizedDelaySec 提供，服务内不要再 sleep
+# （服务内 sleep 会占用 TimeoutStartSec，超时会被 SIGTERM）
+ExecStart=/opt/qoder-signin/run.sh %i
+TimeoutStartSec=900
+# 内网小机器，跑的时候别抢业务资源
+Nice=10
+CPUWeight=20
+IOWeight=20
+# 先尝试温和续期：账号未登录时不应挡住主流程
+ExecStartPre=-/opt/qoder-signin/precheck.sh %i
+
+[Install]
+WantedBy=multi-user.target
